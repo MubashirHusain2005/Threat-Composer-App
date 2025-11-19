@@ -1,9 +1,0 @@
-name: Runs Terraform init and plan when triggered
-
-on:
-  push: 
-    branches: [ "main" ]
-
-jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
