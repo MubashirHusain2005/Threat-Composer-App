@@ -42,5 +42,10 @@ jobs:
         aws-region: us-east-1
       run: |
         docker build -t $REGISTRY/$REPOSITORY:latest .
+
+    - name: Run Trivy Vulnerability Scanner
+      uses: aquasecurity/trivy-actions@0.28.0
+      with:
+        image-ref: 
         docker push $REGISTRY/$REPOSITORY:latest
 
