@@ -43,7 +43,7 @@ jobs:
         REPOSITORY: threat-composer-app
         aws-region: us-east-1
       run: |
-        cd Project
+        cd THREAT-COMPOSER-APP-1
         docker build -t $REGISTRY/$REPOSITORY:latest .
         docker push $REGISTRY/$REPOSITORY:latest
 
