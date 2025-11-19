@@ -1,0 +1,52 @@
+#  ACM Certificate (DNS Validation)
+
+
+resource "aws_acm_certificate" "app_cert" {
+  domain_name               = var.domain_name
+  validation_method         = "DNS"
+  subject_alternative_names = ["www.${var.domain_name}"]
+
+  tags = {
+    Name = "app-cert"
+  }
+}
+
+
+#  Create DNS Validation Records
+
+resource "aws_route53_record" "cert_validation_record" {
+  for_each = {
+    for dvo in aws_acm_certificate.app_cert.domain_validation_options :
+    dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  zone_id         = data.aws_route53_zone.primary.zone_id
+  name            = each.value.name
+  type            = each.value.type
+  ttl             = 60
+  records         = [each.value.record]
+}
+
+
+# Validate ACM Certificate
+
+resource "aws_acm_certificate_validation" "validation" {
+  certificate_arn = aws_acm_certificate.app_cert.arn
+
+  validation_record_fqdns = [
+    for record in aws_route53_record.cert_validation_record : record.fqdn
+  ]
+
+  timeouts {
+    create = "5m"
+  }
+}
+
+data "aws_route53_zone" "primary" {
+  name         = "${var.domain_name}"
+}
