@@ -39,7 +39,7 @@ module "ACM" {
   source      = "./Modules/ACM"
   domain_name = var.domain_name
 
-}
+} 
 
 # Route 53 Module
 module "Route53" {
