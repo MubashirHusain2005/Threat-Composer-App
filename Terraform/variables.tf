@@ -1,5 +1,6 @@
 variable "container_name" {
   type = string
+  default = "threat-composer-app"
 }
 
 variable "public_subnet_ids" {
