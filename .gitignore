@@ -89,3 +89,4 @@ coverage/
 .envrc
 .cache/
 .parcel-cache/
+.terraform/
