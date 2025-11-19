@@ -49,7 +49,7 @@ module "Route53" {
   alb_zone_id               = module.ALB.alb_zone_id
   domain_validation_options = module.ACM.domain_validation_options
   certificate_arn           = module.ACM.acm_certificate_arn
-  
+
 }
 
 # ECS MODULE
