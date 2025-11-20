@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to ECR
+name: Build and Push Docker Image to ECR with Trivy
 
 on:
   workflow_dispatch :
@@ -25,7 +25,7 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v4
       with:
         role-to-assume: arn:aws:iam::038774803581:role/github.to.aws.oicd@
-        aws-region: us-east-1
+        aws-region: eu-west-2
 
 ## Login to ECR
 
@@ -39,13 +39,28 @@ jobs:
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: threat-composer-app
-        aws-region: us-east-1
+        aws-region: eu-west-2
       run: |
         docker build -t $REGISTRY/$REPOSITORY:latest .
+
+#Running Trivy here to spot errors with Docker image
 
     - name: Run Trivy Vulnerability Scanner
       uses: aquasecurity/trivy-actions@0.28.0
       with:
-        image-ref: 
+        image-ref: ${{ steps.login-ecr.outputs.registry }}
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'CRITICAL,HIGH'
+
+# If Trivy passed, push image     
+
+    - name: Push Docker Image
+      env:
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}/threat-composer-app:latest
+        REPOSITORY: threat-composer-app
+      run: |
         docker push $REGISTRY/$REPOSITORY:latest
 

@@ -23,7 +23,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::038774803581:role/github.to.aws.oicd@
-          aws-region: us-east-1
+          aws-region: eu-west-2
 
       
       
@@ -35,6 +35,11 @@ jobs:
       - name: Terraform Init
         working-directory: ./Terraform
         run: terraform init
+
+      -  name: Terraform Plan Before Destroy
+         working-directory: ./Terraform
+         run: terraform plan
+
 
       - name: Terraform Destroy
         working-directory: ./Terraform
