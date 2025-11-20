@@ -14,6 +14,7 @@ terraform {
     region       = "eu-west-2"
     use_lockfile = false
     encrypt      = true
+    profile      = "terraform-test"
   }
 }
 
