@@ -35,7 +35,7 @@ jobs:
 
 #Build and push Docker image as 'latest'
 
-    - name: Build and push Docker image to Amazon ECR
+    - name: Build  Docker Image 
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: threat-composer-app
@@ -57,9 +57,9 @@ jobs:
 
 # If Trivy passed, push image     
 
-    - name: Push Docker Image
+    - name: Push Docker Image to Amazon ECR
       env:
-        REGISTRY: ${{ steps.login-ecr.outputs.registry }}/threat-composer-app:latest
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: threat-composer-app
       run: |
         docker push $REGISTRY/$REPOSITORY:latest
