@@ -34,6 +34,13 @@ jobs:
         with:
           terraform_version: latest 
 
+      - name: Create S3 for Terraform State
+        run: |
+          aws s3api create-bucket \
+          --bucket mubashir-tf-state-bucket-20-11-2025 \
+          -- region eu-west-2 \
+          -- create-bucket-configuration LocationConstraint=eu-west-2 || echo "Bucket created"
+
 
       - name: Terraform Init
         working-directory: ./Terraform
