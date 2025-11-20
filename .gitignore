@@ -59,18 +59,7 @@ logs/
 *.log
 *.tmp
 
-# PM2 logs
-pids
-*.pid
-*.seed
-*.pid.lock
 
-# -----------------------------------
-# Docker
-# -----------------------------------
-**/.dockerignore
-docker-compose.override.yml
-docker-data/
 
 # -----------------------------------
 # Optional — TypeScript
@@ -83,9 +72,7 @@ docker-data/
 coverage/
 .nyc_output/
 
-# -----------------------------------
-# Local Dev Tools
-# -----------------------------------
+
 .envrc
 .cache/
 .parcel-cache/
