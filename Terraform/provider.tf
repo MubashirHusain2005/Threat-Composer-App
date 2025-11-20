@@ -9,10 +9,10 @@ terraform {
 
 
  backend "s3" {
-    bucket       = "mubashir-tf-state-bucket"
+    bucket       = "mubashir-tf-state-bucket-20-11-2025"
     key          = "terraform.tfstate"
     region       = "eu-west-2"
-    use_lockfile = false
+    use_lockfile = true
     encrypt      = true
    
   }
