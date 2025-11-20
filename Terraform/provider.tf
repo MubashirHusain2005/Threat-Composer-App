@@ -19,16 +19,9 @@ terraform {
     dynamodb_table = "terraform-locks"
     encrypt        = true
   }
-
-  required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "6.20.0"
-    }
-  }
 }
 
-resource "aws_s3_bucket" "tf_state" {
+  resource "aws_s3_bucket" "tf_state" {
   bucket = "mubashir-tf-state-bucket"
 
     tags = {
