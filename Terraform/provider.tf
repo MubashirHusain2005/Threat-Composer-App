@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 terraform {
-  backend "S3" {
+  backend "s3" {
     bucket   = "mubashir-tf-state-bucket"
     key      = "terraform.tfstate"
     region   = "terraform-locks"
