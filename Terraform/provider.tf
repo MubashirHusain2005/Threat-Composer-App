@@ -14,6 +14,7 @@ terraform {
     region       = "eu-west-2"
     use_lockfile = false
     encrypt      = true
+   
   }
 }
 
@@ -21,15 +22,6 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-
-resource "aws_s3_bucket" "tf_state" {
-  bucket = "mubashir-tf-state-bucket"
-
-  tags = {
-    Name        = "tf-S3"
-    Environment = "DEV"
-  }
-}
 
 resource "aws_dynamodb_table" "tf_lock" {
   name         = "terraform-locks"
