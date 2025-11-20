@@ -100,7 +100,11 @@ resource "aws_iam_role_policy" "github_actions_ecr_permissions" {
           "ecr:UploadLayerPart",
           "ecr:GetDownloadUrlForLayer",
           "logs:CreateLogStream",
-          "logs:PutLogEvents"
+          "logs:PutLogEvents",
+          "s3:CreateBucket",
+          "s3:PutBucketVersioning",
+          "s3:PutBucketAcl",
+          "s3:ListBucket",
         ],
         Resource = "*"
       }
