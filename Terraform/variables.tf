@@ -1,5 +1,5 @@
 variable "container_name" {
-  type = string
+  type    = string
   default = "threat-composer-app"
 }
 

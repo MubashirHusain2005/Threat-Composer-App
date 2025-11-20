@@ -6,28 +6,29 @@ terraform {
     }
   }
 
+
+
+ backend "s3" {
+    bucket       = "mubashir-tf-state-bucket"
+    key          = "terraform.tfstate"
+    region       = "eu-west-2"
+    use_lockfile = false
+    encrypt      = true
+  }
 }
+
 provider "aws" {
   region = "eu-west-2"
 }
 
-terraform {
-  backend "s3" {
-    bucket   = "mubashir-tf-state-bucket"
-    key      = "terraform.tfstate"
-    region   = "terraform-locks"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
-  }
-}
 
-  resource "aws_s3_bucket" "tf_state" {
+resource "aws_s3_bucket" "tf_state" {
   bucket = "mubashir-tf-state-bucket"
 
-    tags = {
-      Name = "tf-S3"
-      Environment = "DEV"
-    }
+  tags = {
+    Name        = "tf-S3"
+    Environment = "DEV"
+  }
 }
 
 resource "aws_dynamodb_table" "tf_lock" {
