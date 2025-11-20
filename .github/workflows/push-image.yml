@@ -46,7 +46,7 @@ jobs:
 #Running Trivy here to spot errors with Docker image
 
     - name: Run Trivy Vulnerability Scanner
-      uses: aquasecurity/trivy-actions@master
+      uses: aquasecurity/trivy-action@v0.33.0
       with:
         image-ref: ${{ steps.login-ecr.outputs.registry }}
         format: 'table'
