@@ -43,8 +43,9 @@ jobs:
     steps:
       - name: Health check
         run: |
-          status=$(curl -s -o /dev/null -w "%{http_code}" https://mubashir.site/health)
+          status=$(curl -s -o /dev/null -w "%{http_code}" https://www.mubashir.site/health)
           if [ "$status" != "200" ]; then
             echo "Health check failed"
             exit 1
           fi
+          echo "Health Check has been successfull!!"
