@@ -21,11 +21,19 @@ FROM nginx:alpine
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
+RUN mkdir -p /var/cache/nginx /var/run 
+
+RUN chown -R appuser:appgroup /var/cache/nginx /var/run
+
+RUN sed -i 's/user nginx;//g' /etc/nginx/nginx.conf
+
 RUN rm -rf /usr/share/nginx/html/*
 
-USER appuser
-
 COPY --from=builder /app/build /usr/share/nginx/html
+
+RUN chown -R appuser:appgroup /usr/share/nginx/html
+
+USER appuser
 
 EXPOSE 80
 
