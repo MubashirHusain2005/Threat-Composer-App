@@ -20,10 +20,9 @@ RUN rm -rf src/ tsconfig.json
 # Stage 2: Production
 
 FROM nginx:alpine
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-RUN mkdir -p /usr/share/nginx/html && chown -R appuser:appgroup /usr/share/nginx/html
-RUN chmod -R 755 /usr/share/nginx/html
-
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup \
+   && mkdir -p /var/cache/nginx /var/run/nginx /usr/share/nginx/html \
+   && chown -R appuser:appgroup /var/cache/nginx /var/run/nginx /usr/share/nginx/html
 USER appuser
 
 COPY --from=builder /app/build /usr/share/nginx/html
