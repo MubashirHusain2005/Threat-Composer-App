@@ -66,14 +66,8 @@ logs/
 # -----------------------------------
 *.tsbuildinfo
 
-# -----------------------------------
-# Testing
-# -----------------------------------
-coverage/
-.nyc_output/
 
-
-.envrc
+.envrc 
 .cache/
 .parcel-cache/
 .terraform/
