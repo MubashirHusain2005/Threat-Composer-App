@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to ECR with Trivy
+name: Push Docker Image to ECR with Trivy
 
 on:
   workflow_dispatch :
@@ -41,6 +41,7 @@ jobs:
         REPOSITORY: threat-composer-app
         aws-region: eu-west-2
       run: |
+        cd My-App
         docker build -t $REGISTRY/$REPOSITORY:latest .
 
 #Running Trivy here to spot errors with Docker image

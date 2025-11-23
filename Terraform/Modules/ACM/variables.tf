@@ -5,8 +5,12 @@ variable "time_to_live" {
 }
 
 variable "domain_name" {
-    type = string
+    type    = string
     default = "mubashir.site"
 }
 
+variable "valid_method" {
+    type    = string
+    default = "DNS"
+}
 

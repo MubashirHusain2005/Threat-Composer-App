@@ -49,3 +49,24 @@ variable "ecs_sg" {
 variable "public_subnet_ids" {
     type = list(string)
 }
+
+variable "network_mode" {
+    type    = string
+    default =  "awsvpc" 
+}
+
+variable "launch_type" {
+    type    = string
+    default = "FARGATE"
+
+}
+
+variable "desired_count" {
+    type = number
+    default = 2
+}
+
+variable "retention_in_days" {
+    type    = number
+    default = 7
+}

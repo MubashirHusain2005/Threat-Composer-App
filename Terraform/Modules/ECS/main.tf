@@ -1,13 +1,11 @@
-# ECS Cluster
-
 resource "aws_ecs_cluster" "main" {
   name = var.cluster_name
 }
 
-#Collects Logs from ECS containers
+
 resource "aws_cloudwatch_log_group" "ecs_logs" {
   name              = "/ecs/my-ecs-task"
-  retention_in_days = 7
+  retention_in_days = var.retention_in_days
 
   tags = {
     Name = "ecs-task-logs"
@@ -15,17 +13,14 @@ resource "aws_cloudwatch_log_group" "ecs_logs" {
 }
 
 
-
-# ECS Task Definition
-
 resource "aws_ecs_task_definition" "task" {
   depends_on               = [ aws_cloudwatch_log_group.ecs_logs ]
   family                   = var.family
-  network_mode             = "awsvpc"                
+  network_mode             = var.network_mode               
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.fargate_cpu
   memory                   = var.memory
-  execution_role_arn       = var.execution_role_arn #Helps to pull the image from ECR
+  execution_role_arn       = var.execution_role_arn 
   runtime_platform {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
@@ -54,24 +49,24 @@ resource "aws_ecs_task_definition" "task" {
   ])
 }
 
-# ECS Service
+
 
 resource "aws_ecs_service" "app_service" {
   name            = "my-fargate-service"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.task.arn
-  desired_count   = 2
-  launch_type     = "FARGATE"
+  desired_count   = var.desired_count
+  launch_type     = var.launch_type
   platform_version = "LATEST"
 
-  # Network settings for Fargate
+  
   network_configuration {
     subnets          = var.public_subnet_ids
     security_groups  = [var.ecs_sg]
     assign_public_ip = true                            
   }
 
-  # Connect to Application Load Balancer
+  
   load_balancer {
     target_group_arn = var.alb_target_grp_arn
     container_name   = "threat-composer-app"

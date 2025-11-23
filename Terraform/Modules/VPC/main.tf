@@ -1,14 +1,14 @@
-#VPC
+
   resource "aws_vpc" "Main" {
   cidr_block       = var.vpc_cidr_block
   instance_tenancy = "default"
 
   tags = {
-    Name = "main"
+    Name = "Main-VPC"
   }
 }
 
-#Public Subnets
+
   resource "aws_subnet" "Subnet-2a" {
   vpc_id     = aws_vpc.Main.id
   cidr_block = var.public_subnet_cidrs[0]
@@ -31,7 +31,7 @@ resource "aws_subnet" "Subnet-2b" {
   }
 }
 
-#Internet Gateway
+
 
 resource "aws_internet_gateway" "IGW" {
   vpc_id = aws_vpc.Main.id
@@ -41,7 +41,7 @@ resource "aws_internet_gateway" "IGW" {
   }
 }
 
-#Public Route Table
+
 
 resource "aws_route_table" "Public-RT" {
   vpc_id = aws_vpc.Main.id
@@ -56,7 +56,6 @@ resource "aws_route_table" "Public-RT" {
   }
 }
 
-#Route Table Associations
 
 resource "aws_route_table_association" "public-subnet-2a" {
   subnet_id      = aws_subnet.Subnet-2a.id
