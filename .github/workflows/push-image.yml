@@ -1,7 +1,7 @@
 name: Push Docker Image to ECR with Trivy
 
 on:
-  workflow_dispatch :
+  workflow_dispatch:
     branches:
       - main
 
