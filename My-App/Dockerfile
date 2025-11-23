@@ -21,7 +21,7 @@ RUN rm -rf src/ tsconfig.json
 
 FROM nginx:alpine
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup \
-   && mkdir -p /var/cache/nginx /var/run/nginx /usr/share/nginx/html \
+   && mkdir -p /var/cache/nginx/client_temp /var/run/nginx /usr/share/nginx/html \
    && chown -R appuser:appgroup /var/cache/nginx /var/run/nginx /usr/share/nginx/html
 USER appuser
 
