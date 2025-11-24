@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions = jsonencode([
     {
       name      = "threat-composer-app"
-      image     = "038774803581.dkr.ecr.eu-west-2.amazonaws.com/threat-app:latest"
+      image     = "038774803581.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-app:latest"
       essential = true
       portMappings = [
         {
