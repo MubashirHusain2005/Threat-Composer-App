@@ -1,8 +1,8 @@
 # VPC Module
 module "VPC" {
   source            = "./Modules/VPC"
-  region            = var.region
   public_subnet_ids = var.public_subnet_ids
+  
 }
 
 # SG Module

@@ -20,3 +20,28 @@ variable "region" {
     type = string
     default = "eu-west-2"
 }
+
+variable "public_ip" {
+  type = string
+  default = "true"
+}
+
+variable "subnet2a" {
+  type = string
+  default = "eu-west-2a"
+}
+
+variable "subnet2b" {
+  type = string
+  default = "eu-west-2b"
+}
+
+variable "vpc_id" {
+    type = string
+    default = "aws_vpc.Main.id"
+} 
+
+variable "gateway_id" {
+    type = string 
+    default = "aws_internet_gateway.IGW.id"
+}

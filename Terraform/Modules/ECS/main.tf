@@ -29,13 +29,13 @@ resource "aws_ecs_task_definition" "task" {
   container_definitions = jsonencode([
     {
       name        = "threat-composer-app"
-      image       = "038774803581.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-app:latest"
+      image       = var.image
       essential   = true
 
       portMappings = [
         {
-          containerPort = 8080
-          protocol      = "tcp"
+          containerPort = var.container_port
+          protocol      = var.protocol
         }
       ]
 
@@ -72,7 +72,7 @@ resource "aws_ecs_service" "app_service" {
   load_balancer {
     target_group_arn = var.alb_target_grp_arn
     container_name   = "threat-composer-app"
-    container_port   = 8080
+    container_port   = var.container_port
   }
 
   depends_on = [

@@ -1,4 +1,4 @@
-#  ACM Certificate (DNS Validation)
+#  ACM Certificate for (DNS Validation)
 
 
 resource "aws_acm_certificate" "app_cert" {
@@ -12,7 +12,7 @@ resource "aws_acm_certificate" "app_cert" {
 }
 
 
-#  Create DNS Validation Records
+# Create the DNS Validation Records
 
 resource "aws_route53_record" "cert_validation_record" {
   for_each = {

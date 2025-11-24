@@ -24,3 +24,8 @@ variable "to_port" {
 variable "vpc_id" {
     type = string
 }
+
+variable "alb-sg" {
+    type    = string
+    default = "alb-sg"
+}

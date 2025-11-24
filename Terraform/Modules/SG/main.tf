@@ -1,7 +1,7 @@
 # Application Load Balancer Security group 
 
 resource "aws_security_group" "alb_sg" {
-  name        = "alb-sg"
+  name        = var.alb-sg
   description = "Allow HTTP and HTTPS inbound traffic"
   vpc_id      = var.vpc_id
 

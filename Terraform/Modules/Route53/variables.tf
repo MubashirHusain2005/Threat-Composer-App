@@ -38,3 +38,14 @@ variable "domain_validation_options" {
 variable "certificate_arn" {
     type = string
 }
+
+
+variable "record_type" {
+    type = string
+    default = "A"
+}
+
+variable "health" {
+    type = string
+    default = "true"
+}

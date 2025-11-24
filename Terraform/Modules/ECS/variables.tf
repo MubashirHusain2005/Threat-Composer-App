@@ -9,13 +9,13 @@ variable "container_name" {
 }
 
 variable "fargate_cpu" {
-    type = string
+    type = number
     default = 256
 }
 
-variable "Container_port" {
+variable "container_port" {
     type    = number
-    default = 80
+    default = 8080
 }
 
 variable "family" {
@@ -69,4 +69,14 @@ variable "desired_count" {
 variable "retention_in_days" {
     type    = number
     default = 7
+}
+
+variable "image" {
+    type = string
+    default = "038774803581.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-app:latest"
+}
+
+variable "protocol" {
+    type   = string
+    default = "tcp"
 }

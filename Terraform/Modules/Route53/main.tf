@@ -9,14 +9,14 @@ data "aws_route53_zone" "primary" {
 resource "aws_route53_record" "MS" {
   zone_id = data.aws_route53_zone.primary.id
   name    = "www.${var.domain_name}"
-  type    = "A"
+  type    = var.record_type
 
 
 
   alias {
     name    = var.alb_dns_name
     zone_id = var.alb_zone_id
-    evaluate_target_health = true
+    evaluate_target_health = var.health
   }
  }
 
