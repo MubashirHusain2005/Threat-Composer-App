@@ -28,15 +28,17 @@ resource "aws_ecs_task_definition" "task" {
 
   container_definitions = jsonencode([
     {
-      name      = "threat-composer-app"
-      image     = "038774803581.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-app:latest"
-      essential = true
+      name        = "threat-composer-app"
+      image       = "038774803581.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-app:latest"
+      essential   = true
+
       portMappings = [
         {
           containerPort = 8080
           protocol      = "tcp"
         }
-      ],
+      ]
+
       logConfiguration = {
         logDriver = "awslogs"
         options = {
@@ -47,8 +49,8 @@ resource "aws_ecs_task_definition" "task" {
       }
     }
   ])
-}
 
+}
 
 
 resource "aws_ecs_service" "app_service" {

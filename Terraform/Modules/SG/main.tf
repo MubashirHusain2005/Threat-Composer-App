@@ -21,6 +21,14 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = var.cidr_block
   }
 
+  ingress {
+    description = "Allow traffic from NGINX"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "-1"
+    cidr_blocks = var.cidr_block
+  }
+
   egress {
     from_port   = var.from_port[2]
     to_port     = var.to_port[2]
