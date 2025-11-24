@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "task" {
       essential = true
       portMappings = [
         {
-          containerPort = 80
+          containerPort = 8080
           protocol      = "tcp"
         }
       ],
@@ -70,7 +70,7 @@ resource "aws_ecs_service" "app_service" {
   load_balancer {
     target_group_arn = var.alb_target_grp_arn
     container_name   = "threat-composer-app"
-    container_port   = 80
+    container_port   = 8080
   }
 
   depends_on = [

@@ -13,7 +13,7 @@ resource "aws_lb" "ALB" {
 
 resource "aws_lb_target_group" "threatcomposer_tg" {
   name        = "ThreatComposer"
-  port        = 80
+  port        = 8080
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "ip"

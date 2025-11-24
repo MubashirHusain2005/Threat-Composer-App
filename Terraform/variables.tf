@@ -11,7 +11,7 @@ variable "public_subnet_ids" {
 
 variable "Container_port" {
   type    = number
-  default = 80
+  default = 8080
 }
 
 variable "domain_name" {
