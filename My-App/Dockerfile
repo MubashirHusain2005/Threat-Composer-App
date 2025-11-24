@@ -26,7 +26,7 @@ RUN mkdir -p /var/cache/nginx /var/run /usr/share/nginx/html \
 RUN touch /var/run/nginx.pid 
 RUN  chown -R appuser:appgroup /var/run/nginx.pid /var/run
 
-COPY nginx.conf etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 
 USER appuser
