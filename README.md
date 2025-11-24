@@ -195,7 +195,7 @@ Automated CI/CD pipelines for scalable and repeatable deployments
 
 
 ## Architecture Diagram
-![Architecture Diagram](architecture.png)
+![Architecture Diagram](Diagram.PNG)
 
 
 
