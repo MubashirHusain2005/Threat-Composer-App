@@ -3,29 +3,31 @@
 This project deploys the Threat Composer application on AWS ECS Fargate, using Terraform for Infrastructure-as-Code and GitHub Actions for CI/CD automation.
 It includes complete infrastructure: VPC, ALB, ECS Cluster, ECR, Route53, ACM, IAM, Security Groups, and automated deployment pipelines.
 
-📁 Project Structure
+## Project Structure
+```
+
 ├── .github/
-│   └── workflows/
-│       ├── apply.yml
-│       ├── destroy.yml
-│       ├── push-image.yml
-│       └── plan.yml
+│ └── workflows/
+│ ├── apply.yml
+│ ├── destroy.yml
+│ ├── push-image.yml
+│ └── plan.yml
 │
 ├── My-App/
-│   └── Dockerfile
+│ └── Dockerfile
 │
 └── Terraform/
-    ├── main.tf
-    ├── provider.tf
-    ├── variables.tf
-    └── modules/
-        ├── Acm/
-        ├── ALB/
-        ├── ECS/
-        ├── Route53/
-        ├── VPC/
-        └── IAM/
-
+├── main.tf
+├── provider.tf
+├── variables.tf
+└── modules/
+├── ACM/
+├── ALB/
+├── ECS/
+├── Route53/
+├── VPC/
+└── IAM/
+```
 
 
 To run the Threat Composer app locally:
@@ -86,8 +88,7 @@ Cloud watch enabled to saved ECS Logs
 
 ## Route53 Module
 
-DNS record for domain (e.g., www.mubashir.site
-)
+DNS record for my domain (www.mubashir.site)
 
 Points cleanly to ALB
 
