@@ -56,7 +56,7 @@ jobs:
         vuln-type: 'os,library'
         severity: 'CRITICAL,HIGH'
 
-# If Trivy passed, push image     
+# If Trivy passed, push image!!     
 
     - name: Push Docker Image to Amazon ECR
       env:

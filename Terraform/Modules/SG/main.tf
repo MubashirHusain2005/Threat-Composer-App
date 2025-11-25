@@ -31,7 +31,7 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
-#Traffic to ECS Containers must come from ALB- ensures ECS tasks are isolated from direct Internet access
+#Traffic to ECS Containers must come from ALB on port 8080
 
 resource "aws_security_group" "ecs_sg" {
   name        = "ECS-alb-sg"

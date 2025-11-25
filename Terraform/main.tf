@@ -16,7 +16,7 @@ module "SG" {
 
 module "IAM" {
   source = "./Modules/IAM"
-}
+} 
 
 # ALB Module
 
@@ -57,7 +57,6 @@ module "Route53" {
 module "ECS" {
   source             = "./Modules/ECS"
   alb_target_grp_arn = module.ALB.alb_target_grp_arn
-  Container_port     = var.Container_port
   container_name     = var.container_name
   public_subnet_ids  = module.VPC.public_subnet_ids
   execution_role_arn = module.IAM.ecs_task_execution_role

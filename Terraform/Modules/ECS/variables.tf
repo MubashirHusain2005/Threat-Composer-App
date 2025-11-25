@@ -80,3 +80,8 @@ variable "protocol" {
     type   = string
     default = "tcp"
 }
+
+variable "app_name" {
+    type    = string
+    default = "threat-composer-app"
+}
