@@ -1,7 +1,7 @@
 ## Threat Composer – ECS Deployment (Terraform + CI/CD)
 
 This project deploys the Threat Composer application on AWS ECS Fargate, using Terraform for Infrastructure-as-Code and GitHub Actions for CI/CD automation.
-It includes complete infrastructure: VPC, ALB, ECS Cluster, ECR, Route53, ACM, IAM, Security Groups, and automated deployment pipelines.
+It includes complete infrastructure: VPC, ALB, ECS Cluster, ECR, Route53, ACM, IAM, Security Groups, and automated CI/CD pipelines.
 
 ## Project Structure
 ```
@@ -162,11 +162,17 @@ Complete security scanning in pipeline
 ## Security Highlights
 
 -App runs as non-root user in Docker
+
 -ALB only exposes ports 80/443
+
 -ECS tasks only accept traffic from ALB
+
 -Infrastructure state is locked (DynamoDB)
+
 -SSL/TLS handled via ACM
+
 -CI/CD includes vulnerability scanning
+
 -IAM is least-privilege
 
 ## Summary
