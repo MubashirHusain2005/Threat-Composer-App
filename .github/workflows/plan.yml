@@ -60,6 +60,12 @@ jobs:
         working-directory: ./Terraform
         run: terraform fmt -check 
 
+      - name: Checkov Scan
+        working-directory: ./Terraform
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+
       
       - name: Terraform Plan
         working-directory: ./Terraform
