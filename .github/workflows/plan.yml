@@ -72,17 +72,3 @@ jobs:
       - name: Checkov Scan
         working-directory: ./Terraform
         run: checkov -d .
-
-
-
-
-      
-
-
-
-
-
-    
-      
-
-
