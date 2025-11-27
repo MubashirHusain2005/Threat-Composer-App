@@ -58,5 +58,7 @@ jobs:
         run: pip install --upgrade checkov
 
       - name: Checkov Scan
-        working-directory: ./Terraform
-        run: checkov -d .
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: ./Terraform
+          framework: terraform

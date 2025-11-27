@@ -1,9 +1,10 @@
-skip_checks:
-  - CKV2_AWS_20
-  - CKV2_AWS_21
-  - CKV2_AWS_35
-  - CKV2_AWS_39
-
 framework:
   - terraform
+
+skip-check:
+  - CKV_AWS_18  
+  - CKV_AWS_144 
+
+quiet: false
+compact: true
 
