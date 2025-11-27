@@ -32,10 +32,11 @@ It includes complete infrastructure: VPC, ALB, ECS Cluster, ECR, Route53, ACM, I
 
 To run the Threat Composer app locally:
 
-yarn install
+```yarn install
 yarn build
 yarn global add serve
 serve -s build
+```
 
 ## 🐳 Containerization (Docker)
 
@@ -190,12 +191,12 @@ Automated CI/CD pipelines for scalable and repeatable deployments
 
 ## Images of Running Service
 
-![Running Domain](app.PNG)
-![Working CI/CD](ci-cd.PNG)
+![Running Domain](app.png)
+![Working CI/CD](cicd.png)
 
 
 ## Architecture Diagram
-![Architecture Diagram](Diagram.PNG)
+![Architecture Diagram](diagram.png)
 
 
 

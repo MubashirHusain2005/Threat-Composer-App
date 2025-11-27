@@ -72,3 +72,5 @@ logs/
 .parcel-cache/
 .terraform/
 .Terraform/
+terraform.tfstate
+terraform.tfstate.backup    
