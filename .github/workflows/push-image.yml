@@ -43,7 +43,7 @@ jobs:
         
         aws-region: eu-west-2
       run: |
-        cd My-App
+        cd app
         docker build -t $REGISTRY/$REPOSITORY:latest .
 
 #Running Trivy here to spot errors with Docker image
