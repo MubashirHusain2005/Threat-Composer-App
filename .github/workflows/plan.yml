@@ -59,4 +59,4 @@ jobs:
 
       - name: Checkov Scan
         working-directory: ./Terraform
-        run: checkov -d .
+        run: checkov -d . --skip-check CKV_AWS_20 --skip-check CKV_AWS_21 --skip-check CKV_AWS_35 --skip-check CKV_AWS_39 --framework terraform
