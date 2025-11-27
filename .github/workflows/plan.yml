@@ -63,8 +63,6 @@ jobs:
       - name: Checkov Scan
         working-directory: ./Terraform
         uses: bridgecrewio/checkov-action@master
-        with:
-          directory: .
         run: checkov -d .
 
       - name: Terraform Plan
