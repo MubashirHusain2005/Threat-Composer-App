@@ -39,6 +39,8 @@ jobs:
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: threat-composer-app
+        MY_SECRET: ${{ secrets.IMAGEREF }}
+        
         aws-region: eu-west-2
       run: |
         cd My-App
@@ -49,7 +51,7 @@ jobs:
     - name: Run Trivy Vulnerability Scanner
       uses: aquasecurity/trivy-action@0.31.0
       with:
-        image-ref: 038774803581.dkr.ecr.eu-west-2.amazonaws.com/threat-composer-app:latest
+        image-ref: ${{ secrets.IMAGEREF }}
         format: 'table'
         exit-code: '1'
         ignore-unfixed: true
@@ -62,6 +64,8 @@ jobs:
       env:
         REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         REPOSITORY: threat-composer-app
+        MY_SECRET: ${{ secrets.IMAGEREF }}
+
       run: |
         docker push $REGISTRY/$REPOSITORY:latest
 
