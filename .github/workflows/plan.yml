@@ -60,7 +60,12 @@ jobs:
         working-directory: ./Terraform
         run: terraform fmt -check 
   
-      - name: Install Checkov
+      
+      - name: Terraform Plan
+        working-directory: ./Terraform
+        run: terraform plan 
+
+        - name: Install Checkov
         run: |
           pip install checkov
 
@@ -68,9 +73,6 @@ jobs:
         working-directory: ./Terraform
         run: checkov -d .
 
-      - name: Terraform Plan
-        working-directory: ./Terraform
-        run: terraform plan 
 
 
 

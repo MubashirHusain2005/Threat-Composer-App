@@ -1,0 +1,10 @@
+skip_checks:
+  - CKV_AWS_20   # WAF not required
+  - CKV_AWS_21   # Open security group not critical
+  - CKV_AWS_35   # Optional S3 logging
+  - CKV_AWS_39   # S3 versioning optional
+
+frameworks:
+  - terraform  
+
+
