@@ -1,10 +1,9 @@
 name: "Terraform Plan with checkov scan"
 
 on:
-  workflow_dispatch :
+  workflow_dispatch:
     branches:
       - main
-
 
 jobs:
   terraform:
@@ -15,38 +14,29 @@ jobs:
       contents: read
 
     steps:
-
       - name: Checkout
-        uses: actions/checkout@v3 
-    
+        uses: actions/checkout@v3
 
-  
       - name: Configure AWS credentials
-        uses:  aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::038774803581:role/github.to.aws.oicd@
           aws-region: eu-west-2
 
-      
-      
-      - name: Install Terraform 
+      - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: latest 
-
-      
+          terraform_version: latest
 
       - name: Create S3 for Terraform State
         run: |
           aws s3api create-bucket \
-          --bucket mubashir-tf-state-bucket-20-11-2025 \
-          --region eu-west-2 \
-          --create-bucket-configuration LocationConstraint=eu-west-2 || echo "Bucket created"
+            --bucket mubashir-tf-state-bucket-20-11-2025 \
+            --region eu-west-2 \
+            --create-bucket-configuration LocationConstraint=eu-west-2 || echo "Bucket created"
 
-      
       - name: Wait for S3 provision
         run: sleep 10
-
 
       - name: Terraform Init
         working-directory: ./Terraform
@@ -58,16 +48,14 @@ jobs:
 
       - name: Terraform fmt
         working-directory: ./Terraform
-        run: terraform fmt -check 
-  
-      
+        run: terraform fmt -check
+
       - name: Terraform Plan
         working-directory: ./Terraform
-        run: terraform plan 
+        run: terraform plan
 
-        - name: Install Checkov
-        run: |
-          pip install checkov
+      - name: Install Checkov
+        run: pip install checkov
 
       - name: Checkov Scan
         working-directory: ./Terraform
