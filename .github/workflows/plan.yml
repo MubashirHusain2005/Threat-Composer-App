@@ -1,4 +1,4 @@
-name: "Terraform Plan with checkov and fmt"
+name: "Terraform Plan with checkov scan"
 
 on:
   workflow_dispatch :
