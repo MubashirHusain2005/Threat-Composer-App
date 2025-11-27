@@ -2,7 +2,7 @@
 module "VPC" {
   source            = "./Modules/VPC"
   public_subnet_ids = var.public_subnet_ids
-  
+
 }
 
 # SG Module
@@ -16,7 +16,7 @@ module "SG" {
 
 module "IAM" {
   source = "./Modules/IAM"
-} 
+}
 
 # ALB Module
 
