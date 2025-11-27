@@ -59,10 +59,13 @@ jobs:
       - name: Terraform fmt
         working-directory: ./Terraform
         run: terraform fmt -check 
+  
+      - name: Install Checkov
+        run: |
+          pip install checkov
 
       - name: Checkov Scan
         working-directory: ./Terraform
-        uses: bridgecrewio/checkov-action@master
         run: checkov -d .
 
       - name: Terraform Plan
