@@ -55,7 +55,7 @@ jobs:
         run: terraform plan
 
       - name: Install Checkov
-        run: pip install checkov
+        run: pip install --upgrade checkov
 
       - name: Checkov Scan
         working-directory: ./Terraform
