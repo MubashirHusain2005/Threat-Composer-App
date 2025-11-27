@@ -66,7 +66,6 @@ jobs:
         with:
           directory: .
 
-      
       - name: Terraform Plan
         working-directory: ./Terraform
         run: terraform plan 
