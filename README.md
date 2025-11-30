@@ -199,9 +199,7 @@ Automated CI/CD pipelines for scalable and repeatable deployments
 
 ![Running Domain](app.png)
 
-
 ![Working CI/CD](cicd.png)
-
 
 ## Architecture Diagram
 ![Architecture Diagram](diagram.png)
