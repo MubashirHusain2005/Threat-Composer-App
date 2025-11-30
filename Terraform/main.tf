@@ -2,6 +2,7 @@
 module "VPC" {
   source            = "./Modules/VPC"
   public_subnet_ids = var.public_subnet_ids
+  gateway_id        = var.internet_gateway_id
 
 }
 

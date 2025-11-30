@@ -38,5 +38,10 @@ variable "region" {
 }
 
 
+variable "internet_gateway_id" {
+  type    = string
+  default = "aws_internet_gateway.IGW.id"
+}
+
 
 

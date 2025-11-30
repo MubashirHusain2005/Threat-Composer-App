@@ -1,4 +1,4 @@
-  resource "aws_vpc" "Main" {
+  resource "aws_vpc" "main-vpc" {
   cidr_block       = var.vpc_cidr_block
   instance_tenancy = "default"
 
@@ -7,33 +7,23 @@
   }
 }
 
+  resource "aws_subnet" "public" {
+    for_each = var.public_subnets
+    vpc_id     = aws_vpc.main-vpc.id
+    cidr_block = each.value.cidr
+    availability_zone = each.value.az
+    map_public_ip_on_launch = var.public_ip
 
-  resource "aws_subnet" "Subnet-2a" {
-  vpc_id     = var.vpc_id
-  cidr_block = var.public_subnet_cidrs[0]
-  availability_zone = var.subnet2a
-  map_public_ip_on_launch = var.public_ip
+    tags = {
+      Name = each.key
+    }
 
-  tags = {
-    Name = "Subnet-2a"
   }
-}
-
-resource "aws_subnet" "Subnet-2b" {
-  vpc_id     = var.vpc_id
-  cidr_block = var.public_subnet_cidrs[1]
-  availability_zone = var.subnet2b
-  map_public_ip_on_launch = var.public_ip
-
-  tags = {
-    Name = "Subnet-2b"
-  }
-}
 
 
 
-resource "aws_internet_gateway" "IGW" {
-  vpc_id = var.vpc_id
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.main-vpc.id
 
   tags = {
     Name = "Main-IGW"
@@ -42,8 +32,8 @@ resource "aws_internet_gateway" "IGW" {
 
 
 
-resource "aws_route_table" "Public-RT" {
-  vpc_id = var.vpc_id
+resource "aws_route_table" "public-rt" {
+  vpc_id = aws_vpc.main-vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -56,14 +46,10 @@ resource "aws_route_table" "Public-RT" {
 }
 
 
-resource "aws_route_table_association" "public-subnet-2a" {
-  subnet_id      = aws_subnet.Subnet-2a.id
-  route_table_id = aws_route_table.Public-RT.id
-}
-
-resource "aws_route_table_association" "public-subnet-2b" {
-  subnet_id      = aws_subnet.Subnet-2b.id
-  route_table_id = aws_route_table.Public-RT.id
+resource "aws_route_table_association" "public-assoc" {
+  for_each = aws_subnet.public
+  subnet_id      = each.value.id
+  route_table_id = aws_route_table.public-rt.id
 }
 
 
