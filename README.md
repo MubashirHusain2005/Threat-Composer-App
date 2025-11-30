@@ -202,7 +202,7 @@ Automated CI/CD pipelines for scalable and repeatable deployments
 ![Working CI/CD](cicd.png)
 
 ## Architecture Diagram
-![Architecture Diagram](diagram.png)
+![Architecture Diagram](architecture.png)
 
 
 
