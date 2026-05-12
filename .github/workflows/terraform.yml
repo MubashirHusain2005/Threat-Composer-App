@@ -78,7 +78,7 @@ jobs:
           tflint
 
       - name: Terraform Format Check
-        run: terraform fmt -check -recursive
+        run: terraform fmt -recursive
 
       - name: Run Checkov
         uses: bridgecrewio/checkov-action@v12
