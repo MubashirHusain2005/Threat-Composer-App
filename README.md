@@ -197,12 +197,12 @@ Automated CI/CD pipelines for scalable and repeatable deployments
 
 ## Images of Running Service
 
-![Running Domain](app.PNG)
+![Running Domain](app.png)
 
-![Working CI/CD](cicd.PNG)
+![Working CI/CD](cicd.png)
 
 ## Architecture Diagram
-![Architecture Diagram](architecture.PNG)
+![Architecture Diagram](architecture.png)
 
 
 
