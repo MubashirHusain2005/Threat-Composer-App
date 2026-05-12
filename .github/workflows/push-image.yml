@@ -55,7 +55,7 @@ jobs:
         id: scan
         with:
           image: image.tar
-          output-format: sarif
+          output-format: table
           fail-build: false
           severity-cutoff: high
 
