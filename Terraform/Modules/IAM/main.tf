@@ -1,9 +1,7 @@
-
 # ECS TASK EXECUTION ROLE
 
-
 resource "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecsTaskExecutionRole"
+  name = "${var.name_prefix}-ecstaskexecutionrole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -17,6 +15,10 @@ resource "aws_iam_role" "ecs_task_execution_role" {
       }
     ]
   })
+
+  tags = {
+    Name = "${var.name_prefix}-ecs-execution-role"
+  }
 }
 
 # Attach AWS-managed execution policy (ECR pull + CloudWatch Logs)
@@ -27,12 +29,10 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
 
 
 
-
-# ECS TASK ROLE (INSIDE CONTAINER)
-
+# ECS TASK ROLE 
 
 resource "aws_iam_role" "ecs_task_role" {
-  name = "ecsTaskRole"
+  name = "${var.name_prefix}-ecs-task-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -46,68 +46,37 @@ resource "aws_iam_role" "ecs_task_role" {
       }
     ]
   })
+
+  tags = {
+    Name = "${var.name_prefix}-ecs-task-role"
+  }
 }
 
-# Attach permissions the application needs (example: read SSM)
-resource "aws_iam_role_policy_attachment" "ecs_task_role_ssm_readonly" {
-  role       = aws_iam_role.ecs_task_role.name
+
+resource "aws_iam_role_policy" "ecs_task_logs" {
+  name = "${var.name_prefix}-ecs-task-logs-policy"
+  role = aws_iam_role.ecs_task_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ]
+      Resource = "*"
+    }]
+  })
+}
+
+
+
+resource "aws_iam_role_policy_attachment" "ecs_task_role_policyattachment" {
+  role       = aws_iam_role.ecs_task_role.id
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
 }
 
 
 
-# GITHUB ACTIONS ROLE (OIDC)
-
-
-resource "aws_iam_role" "github_actions" {
-  name = "github-actions-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Principal = {
-          Federated = "arn:aws:iam::038774803581:oidc-provider/token.actions.githubusercontent.com"
-        }
-        Action = "sts:AssumeRoleWithWebIdentity"
-        Condition = {
-          StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:MubashirHusain2005/Threat-Composer-App:*"
-          }
-        }
-      }
-    ]
-  })
-}
-
-# Permissions for GitHub Actions to push to ECR
-resource "aws_iam_role_policy" "github_actions_ecr_permissions" {
-  role = aws_iam_role.github_actions.name
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [
-      {
-        Effect = "Allow",
-        Action = [
-          "ecr:GetAuthorizationToken",
-          "ecr:BatchCheckLayerAvailability",
-          "ecr:BatchGetImage",
-          "ecr:CompleteLayerUpload",
-          "ecr:InitiateLayerUpload",
-          "ecr:PutImage",
-          "ecr:UploadLayerPart",
-          "ecr:GetDownloadUrlForLayer",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-          "s3:CreateBucket",
-          "s3:PutBucketVersioning",
-          "s3:PutBucketAcl",
-          "s3:ListBucket",
-        ],
-        Resource = "*"
-      }
-    ]
-  })
-}

@@ -12,14 +12,11 @@ RUN yarn build
 
 RUN rm -rf src/ tsconfig.json
 
-
-# Stage 2: Production with standard nginx
+# Stage 2: Production
 FROM nginx:alpine
 
-# Create non-root user and group
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# Create directories Nginx needs and make them writable
 RUN mkdir -p /var/cache/nginx /var/run /usr/share/nginx/html \
     && chown -R appuser:appgroup /var/cache/nginx /var/run /usr/share/nginx/html
 
@@ -28,15 +25,10 @@ RUN  chown -R appuser:appgroup /var/run/nginx.pid /var/run
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-
 USER appuser
 
-# Copy React build from builder
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Expose non-privileged port
 EXPOSE 8080
 
-
-# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]

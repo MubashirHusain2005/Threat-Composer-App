@@ -1,71 +1,71 @@
-name: Push Docker Image to ECR with Trivy
+name: Build and Push Image to ECR
 
 on:
-  workflow_dispatch:
+  push:
     branches:
       - main
+    paths:
+      - 'app/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: write
+  security-events: write
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  REGISTRY: ""      # set dynamically after ECR login
+  REPOSITORY: ${{ vars.REPOSITORY }}
 
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-
-
-    permissions:
-      id-token: write
-      contents: read 
+  build:
+    runs-on: ubuntu-24.04
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
 
-# Configure AWS credentials using OIDC
 
-    - name: Configure AWS credentials using OIDC
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        role-to-assume: arn:aws:iam::038774803581:role/github.to.aws.oicd@
-        aws-region: eu-west-2
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
 
-## Login to ECR
+      - name: Build Docker image
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: ${{ vars.REPOSITORY }}
+        run: |
+          cd app
+          docker build -t $REGISTRY/$REPOSITORY:v2 .
+          docker save $REGISTRY/$REPOSITORY:v2 -o image.tar  
 
-    - name: Login to Amazon ECR
-      id: login-ecr 
-      uses: aws-actions/amazon-ecr-login@v1
+      - name: Scan with Clair
+        uses: quay/clair-action@main
+        with:
+          image-ref: image.tar   
+          format: sarif
+          output: clair-results.sarif
 
-#Build and push Docker image as 'latest'
+      - name: Upload Clair SARIF results
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: clair-results.sarif
 
-    - name: Build  Docker Image 
-      env:
-        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        REPOSITORY: threat-composer-app
-        MY_SECRET: ${{ secrets.IMAGEREF }}
-        
-        aws-region: eu-west-2
-      run: |
-        cd app
-        docker build -t $REGISTRY/$REPOSITORY:latest .
-
-#Running Trivy here to spot errors with Docker image
-
-    - name: Run Trivy Vulnerability Scanner
-      uses: aquasecurity/trivy-action@0.31.0
-      with:
-        image-ref: ${{ secrets.IMAGEREF }}
-        format: 'table'
-        exit-code: '1'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH'
-
-# If Trivy passed, push image!!     
-
-    - name: Push Docker Image to Amazon ECR
-      env:
-        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        REPOSITORY: threat-composer-app
-        MY_SECRET: ${{ secrets.IMAGEREF }}
-
-      run: |
-        docker push $REGISTRY/$REPOSITORY:latest
-
+      - name: Push Docker image to Amazon ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}   
+          REPOSITORY: ${{ vars.REPOSITORY }}
+        run: |
+          docker push $REGISTRY/$REPOSITORY:v2

@@ -1,16 +1,21 @@
 variable "time_to_live" {
-    description = "Time to Live for the route 53"
-    type        = number
-    default     = 60
+  description = "Time to Live for the route 53"
+  type        = number
+  default     = 60
 }
 
 variable "domain_name" {
-    type    = string
-    default = "mubashir.site"
+  type    = string
+  default = "mubashir.site"
 }
 
 variable "valid_method" {
-    type    = string
-    default = "DNS"
+  type    = string
+  default = "DNS"
 }
+
+variable "name_prefix" {
+  type = string
+}
+
 

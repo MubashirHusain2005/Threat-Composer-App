@@ -3,11 +3,6 @@ variable "container_name" {
   default = "threat-composer-app"
 }
 
-variable "public_subnet_ids" {
-  description = "Public Subnets"
-  type        = list(string)
-  default     = ["aws_subnet.Subnet-2a.id", "aws_subnet.Subnet-2b.id"]
-}
 
 variable "Container_port" {
   type    = number
@@ -38,10 +33,9 @@ variable "region" {
 }
 
 
-variable "internet_gateway_id" {
+
+variable "name_prefix" {
   type    = string
-  default = "aws_internet_gateway.IGW.id"
+  default = "ecs"
 }
-
-
 

@@ -1,5 +1,8 @@
-#  ACM Certificate for (DNS Validation)
+data "aws_route53_zone" "primary" {
+  name = var.domain_name
+}
 
+#  ACM Certificate for (DNS Validation)-Requesting a certificate
 
 resource "aws_acm_certificate" "app_cert" {
   domain_name               = var.domain_name
@@ -10,7 +13,6 @@ resource "aws_acm_certificate" "app_cert" {
     Name = "app-cert"
   }
 }
-
 
 # Create the DNS Validation Records
 
@@ -47,6 +49,5 @@ resource "aws_acm_certificate_validation" "validation" {
   }
 }
 
-data "aws_route53_zone" "primary" {
-  name         = "${var.domain_name}"
-}
+
+
